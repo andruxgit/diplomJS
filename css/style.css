@@ -1,6 +1,9 @@
 /*Fonts Family*/
 /*Colors*/
 /*Basic settings*/
+/* *{
+  outline: none;
+} */
 html {
   /* overflow-x: hidden; */
   font-size: 10px;
@@ -511,6 +514,7 @@ textarea:focus {
 
 .decoration_item {
   text-align: center;
+  outline:none;
 }
 
 .decoration_item a {
@@ -540,7 +544,6 @@ textarea:focus {
 }
 
 .decoration_item .no_click {
-  /*border: 1px solid red;*/
   height: 8rem;
   padding: 2rem 0;
   border-top: 1rem solid #f7f7f7;
@@ -552,6 +555,11 @@ textarea:focus {
   padding: 2rem 0;
   background: -webkit-gradient(linear, left top, left bottom, from(#ebebeb), color-stop(0%, #ebebeb), to(rgba(255, 255, 255, 0)));
   background: linear-gradient(180deg, #ebebeb 0%, #ebebeb 0%, rgba(255, 255, 255, 0) 100%);
+  outline: none;
+}
+.decoration_item .after_click a{
+  border-bottom: none;
+  outline: none;
 }
 
 .decoration_content {

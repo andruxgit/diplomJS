@@ -3,6 +3,7 @@ window.addEventListener('DOMContentLoaded', function () {
 
   //Tabs
   let classTab = document.querySelectorAll('.decoration_item'),
+   classTabLink = document.querySelectorAll('.decoration_item div>a'),
     classWrapTab = document.querySelectorAll('.decoration_slider')[0],
     classTabContentItem = document.querySelectorAll('.content_tab'),
     classTabActive = classWrapTab.querySelectorAll('.decoration_item > div');
@@ -21,6 +22,12 @@ window.addEventListener('DOMContentLoaded', function () {
         classTabActive[i].classList.remove('after_click');
       }  
      classTabActive[num].classList.add('after_click');
+
+    //  classTab[num].style.outline = 'none';
+    //  let  a = classTab[num].querySelector('div>a');
+    //  a.style.border = 'none';
+    //  a.style.color = '#0089cd';
+     
   }
 
   function showContent(num) {
