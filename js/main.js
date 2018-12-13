@@ -22,12 +22,10 @@ window.addEventListener('DOMContentLoaded', function () {
         classTabActive[i].classList.remove('after_click');
       }  
      classTabActive[num].classList.add('after_click');
-
     //  classTab[num].style.outline = 'none';
     //  let  a = classTab[num].querySelector('div>a');
     //  a.style.border = 'none';
-    //  a.style.color = '#0089cd';
-     
+    //  a.style.color = '#0089cd';  
   }
 
   function showContent(num) {
@@ -53,4 +51,31 @@ window.addEventListener('DOMContentLoaded', function () {
 
   hideContent(1);
   tabClick();
+
+  //modal windows
+  function getHeaderModal (classBtn,classWindow){
+    let headerBtn = document.querySelectorAll(classBtn)[0],
+    modal = document.querySelectorAll(classWindow)[0],
+    close = modal.querySelectorAll('.popup_close')[0];
+  
+    headerBtn.addEventListener('click', (event) => {
+      modal.classList.add('show');
+    })
+
+    close.addEventListener('click', (event) => {
+      modal.classList.remove('show');
+    })
+  }
+
+  getHeaderModal ('.popup_engineer_btn','.popup_engineer');
+
+  getHeaderModal ('.contact_us','.popup');
+
+  //form
+
+ // Request a call
+ 
+
+
+
 })
