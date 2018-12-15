@@ -54,22 +54,22 @@ window.addEventListener('DOMContentLoaded', function () {
   function getHeaderModal(classBtn, classWindow) {
 
     let headerBtn = document.querySelector(classBtn),
-    modalEngineer = document.querySelector(classWindow),
-    popupClose = modalEngineer.querySelector('.popup_close'),
-    close = modalEngineer.querySelector('strong');
+    modal = document.querySelector(classWindow),
+    popupClose = modal.querySelector('.popup_close'),
+    close = modal.querySelector('strong');
 
 
 headerBtn.addEventListener('click', (event) => {
   event.preventDefault();
-   modalEngineer.style.display = 'flex';
+   modal.style.display = 'flex';
 });
 
-modalEngineer.addEventListener('click', (event) => {
- let target = event.target || event.srcElement;
-     if(target != modalEngineer && target != popupClose && target != close) {
-         modalEngineer.style.display = 'flex';
+modal.addEventListener('click', (event) => {
+ let target = event.target
+     if(target != modal && target != popupClose && target != close) {
+         modal.style.display = 'flex';
      }else {
-         modalEngineer.style.display = 'none';
+         modal.style.display = 'none';
       
      }
 });
