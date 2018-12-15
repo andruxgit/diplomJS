@@ -3,11 +3,11 @@ window.addEventListener('DOMContentLoaded', function () {
 
   //Tabs
   let classTab = document.querySelectorAll('.decoration_item'),
-   classTabLink = document.querySelectorAll('.decoration_item div>a'),
+    // classTabLink = document.querySelectorAll('.decoration_item div>a'),
     classWrapTab = document.querySelectorAll('.decoration_slider')[0],
     classTabContentItem = document.querySelectorAll('.content_tab'),
     classTabActive = classWrapTab.querySelectorAll('.decoration_item > div');
-  // console.log(classTabActive)
+
 
   function hideContent(num) {
     for (let i = num; i < classTabContentItem.length; i++) {
@@ -19,13 +19,9 @@ window.addEventListener('DOMContentLoaded', function () {
 
   function unsetActivTab(num) {
     for (let i = 0; i < classTabActive.length; i++) {
-        classTabActive[i].classList.remove('after_click');
-      }  
-     classTabActive[num].classList.add('after_click');
-    //  classTab[num].style.outline = 'none';
-    //  let  a = classTab[num].querySelector('div>a');
-    //  a.style.border = 'none';
-    //  a.style.color = '#0089cd';  
+      classTabActive[i].classList.remove('after_click');
+    }
+    classTabActive[num].classList.add('after_click');
   }
 
   function showContent(num) {
@@ -53,29 +49,168 @@ window.addEventListener('DOMContentLoaded', function () {
   tabClick();
 
   //modal windows
-  function getHeaderModal (classBtn,classWindow){
-    let headerBtn = document.querySelectorAll(classBtn)[0],
-    modal = document.querySelectorAll(classWindow)[0],
-    close = modal.querySelectorAll('.popup_close')[0];
-  
-    headerBtn.addEventListener('click', (event) => {
-      modal.classList.add('show');
-    })
-
-    close.addEventListener('click', (event) => {
-      modal.classList.remove('show');
-    })
-  }
-
-  getHeaderModal ('.popup_engineer_btn','.popup_engineer');
-
-  getHeaderModal ('.contact_us','.popup');
-
-  //form
-
- // Request a call
  
 
+  function getHeaderModal(classBtn, classWindow) {
 
+    let headerBtn = document.querySelector(classBtn),
+    modalEngineer = document.querySelector(classWindow),
+    popupClose = modalEngineer.querySelector('.popup_close'),
+    close = modalEngineer.querySelector('strong');
+
+
+headerBtn.addEventListener('click', () => {
+   modalEngineer.style.display = 'flex';
+});
+
+modalEngineer.addEventListener('click', (event) => {
+ let target = event.target || event.srcElement;
+     if(target != modalEngineer && target != popupClose && target != close) {
+         modalEngineer.style.display = 'flex';
+     }else {
+         modalEngineer.style.display = 'none';
+      
+     }
+});
+}
+  getHeaderModal('.popup_engineer_btn', '.popup_engineer');
+
+  getHeaderModal('.contact_us', '.popup');
+  
+
+  //******************************* */
+  // form
+  function myRequest(form, url = '../server.php') {
+    //control input phone
+    let reNum = /[-\.;":'*a-zA-Zа-яА-Я]/;
+    let inputPhone = form.querySelectorAll('input')[1];
+    inputPhone.addEventListener('keyup', function () {
+      this.value = this.value.replace(reNum, '');
+      inputPhone.value = this.value;
+    });
+    //message alert
+    function validMessage(str) {
+      let validMsg = document.createElement('div'),
+        formInput = form.getElementsByTagName('h2')[0];
+      formInput.appendChild(validMsg);
+      validMsg.textContent = str;
+      validMsg.style.color = 'red';
+
+      setTimeout(() => {
+        formInput.removeChild(validMsg);
+      }, 3000);
+    }
+
+    // send data
+    form.addEventListener('submit', function (event) {
+      event.preventDefault();
+
+      //  valid form
+      let rePhone = /^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$/,
+        reMail = /^[\w-\.]+@[\w-]+\.[a-z]{2,4}$/,
+        reText = /^[^a-я,a-z]{1,}$/i;
+
+      let input = form.getElementsByTagName('input'),
+        valid = true;
+      //  перебираем все возможные инпуты
+      for (let i = 0; i < input.length; i++) {
+        if (input[i].type == "text" && (valid)) {
+          valid = !(reText.test(input[i].value)) && String(input[i].value).length < 15;
+          if (!valid) {
+            validMessage('Неверные данные имени');
+            for (let i = 0; i < input.length; i++) {
+              input[i].value = '';
+            }
+          }
+        }
+        if (input[i].type == "tel" && (valid)) {
+          valid = rePhone.test(input[i].value);
+          if (!valid) {
+            validMessage('Неверные данные телефона');
+            for (let i = 0; i < input.length; i++) {
+              input[i].value = '';
+            }
+          }
+        }
+        if (input[i].type == "email" && (valid)) {
+          valid = reMail.test(input[i].value) ? true : false;
+          if (!valid) {
+            validMessage('Неверные данные почты');
+            for (let i = 0; i < input.length; i++) {
+              input[i].value = '';
+            }
+
+          }
+        }
+      }
+      if (valid) {
+        //обьект сообщений об событии отправки
+        let message = {
+          loading: 'Загрузка...',
+          sucsess: 'Спасибо скоро мы с вами свяжемся!',
+          failure: 'Что-то пошло не так...'
+        };
+
+        // let input = form.getElementsByTagName('input');
+
+        //формирование запроса на сервер
+        function postdata(formObj) {
+          return new Promise(function (resolve, reject) {
+
+            let request = new XMLHttpRequest();
+
+            request.open('POST', url);
+
+            request.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
+
+            let formData = new FormData(formObj),
+              obj = {};
+            formData.forEach(function (value, key) {
+              obj[key] = value;
+            });
+            let json = JSON.stringify(obj);
+            request.send(json);
+
+            request.addEventListener('readystatechange', function () {
+              if (request.readyState < 4) {
+                resolve();
+              } else if (request.readyState === 4 && request.status == 200) {
+                resolve();
+              } else {
+                reject();
+              }
+            });
+
+          });
+
+        } //end post data
+        let headModal = form.getElementsByTagName('h2')[0];
+        let startText = headModal.textContent;
+        postdata(form).then(() => {
+          headModal.innerHTML = message.loading;
+          headModal.classList.add('titleSucsess')
+        }).then(() => {
+          headModal.innerHTML = message.sucsess;
+          headModal.classList.add('titleSucsess')
+        }).catch(() => {
+          headModal.innerHTML = message.failure;
+          headModal.classList.add('titleAlert')
+        }).then(() => {
+          //очистка сообщения
+          setTimeout(() => {
+            headModal.innerHTML = startText;
+            headModal.classList = '';
+            for (let i = 0; i < input.length; i++) {
+              input[i].value = '';
+            }
+          }, 3000);
+        });
+      }
+    });
+  }
+
+  // Отправка сообщения для модального окна
+  let form = document.querySelectorAll('.popup_engineer')[0];
+  myRequest(form, '../server.php');
 
 })
