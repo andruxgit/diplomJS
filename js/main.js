@@ -82,12 +82,10 @@ modalEngineer.addEventListener('click', (event) => {
   // form
   function myRequest(form, url = '../server.php') {
     //control input phone
-    let reNum = /[-\.;":'*a-zA-Zа-яА-Я]/;
-
+    let reNum = /^[^1-9]{1}$|[^0-9+]/ig;
     let inputPhone = form.querySelectorAll('input')[1];
     inputPhone.addEventListener('keyup', function () {
-      this.value = this.value.replace(reNum, '');
-      inputPhone.value = this.value;
+      inputPhone.value = inputPhone.value.replace(reNum, ''); 
     });
 
     //message alert
