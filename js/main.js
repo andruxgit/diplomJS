@@ -59,7 +59,8 @@ window.addEventListener('DOMContentLoaded', function () {
     close = modalEngineer.querySelector('strong');
 
 
-headerBtn.addEventListener('click', () => {
+headerBtn.addEventListener('click', (event) => {
+  event.preventDefault();
    modalEngineer.style.display = 'flex';
 });
 
@@ -77,80 +78,32 @@ modalEngineer.addEventListener('click', (event) => {
 
   getHeaderModal('.contact_us', '.popup');
   
+  getHeaderModal('.feedback_block', '.popup');
+  
+  
 
   //******************************* */
   // form
   function myRequest(form, url = '../server.php') {
     //control input phone
-    let reNum = /^[^1-9]{1}$|[^0-9+]/ig;
+    let reNum = /^[^1-9]{1}$|[^0-9]/ig;
     let inputPhone = form.querySelectorAll('input')[1];
     inputPhone.addEventListener('keyup', function () {
       inputPhone.value = inputPhone.value.replace(reNum, ''); 
     });
 
-    //message alert
-    function validMessage(str) {
-      let validMsg = document.createElement('div'),
-        formInput = form.getElementsByTagName('h2')[0];
-      formInput.appendChild(validMsg);
-      validMsg.textContent = str;
-      validMsg.style.color = 'red';
-
-      setTimeout(() => {
-        formInput.removeChild(validMsg);
-      }, 3000);
-    }
-
+  
     // send data
     form.addEventListener('submit', function (event) {
 
       event.preventDefault();
 
-      // valid form
-      let rePhone = /^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$/,
-        reMail = /^[\w-\.]+@[\w-]+\.[a-z]{2,4}$/,
-        reText = /^[^a-я,a-z]{1,}$/i;
-
-      let input = form.getElementsByTagName('input'),
-        valid = true;
-      //  перебираем все возможные инпуты
-      for (let i = 0; i < input.length; i++) {
-        // if (input[i].type == "text" && (valid)) {
-        //   valid = !(reText.test(input[i].value)) && String(input[i].value).length < 15;
-        //   if (!valid) {
-        //     validMessage('Неверные данные имени');
-        //     for (let i = 0; i < input.length; i++) {
-        //       input[i].value = '';
-        //     }
-        //   }
-        // }
-        if (input[i].type == "tel" && (valid)) {
-          valid = rePhone.test(input[i].value);
-          if (!valid) {
-            validMessage('Неверные данные телефона');
-            for (let i = 0; i < input.length; i++) {
-              input[i].value = '';
-            }
-          }
-        }
-        if (input[i].type == "email" && (valid)) {
-          valid = reMail.test(input[i].value) ? true : false;
-          if (!valid) {
-            validMessage('Неверные данные почты');
-            for (let i = 0; i < input.length; i++) {
-              input[i].value = '';
-            }
-          }
-        }
-      }
-      if (valid) {
         //обьект сообщений об событии отправки
         let message = {
           loading: 'Загрузка...',
           sucsess: 'Спасибо скоро мы с вами свяжемся!',
           failure: 'Что-то пошло не так...'
         };
-
       
         function postdata(formObj) {
           return new Promise(function (resolve, reject) {
@@ -167,13 +120,10 @@ modalEngineer.addEventListener('click', (event) => {
             request.addEventListener('readystatechange', function () {
               if (request.readyState < 4) {
                 resolve();
-                console.log('отправка');
               } else if (request.readyState === 4 && request.status == 200) {
                 resolve();
-                console.log('успех');
               } else {
                 reject();
-                console.log('ошибка');
               }
             });
           });
@@ -209,15 +159,14 @@ modalEngineer.addEventListener('click', (event) => {
             }
           }, 3000);
         });
-      }
+      
     });
-  }
+  } //end form
 
   // Отправка сообщения для модального окна
 function sendDataForm (){
   let form = document.querySelectorAll('.form');
   for (let i= 0; i< form.length;i++){
-    console.log(form[i])
 
     myRequest(form[i], '../server.php');
   }
