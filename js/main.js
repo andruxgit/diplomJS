@@ -20,7 +20,6 @@ window.addEventListener('DOMContentLoaded', function () {
         classTabActive[i].classList.remove(classActiv);
       }
       classTabActive[num].classList.add(classActiv);
-      console.log(classTabActive[num])
     }
 
     function showContent(num) {
@@ -33,8 +32,6 @@ window.addEventListener('DOMContentLoaded', function () {
         let target = event.target;
         if (target) {
           for (let i = 0; i < classTab.length; i++) {
-
-            // console.log(target)
 
             if (target && (classWrapTab.getElementsByTagName('a')[i] == target || classWrapTab.getElementsByTagName('img')[i] == target || classWrapTab.getElementsByClassName('no_click')[i] == target || classWrapTab.getElementsByClassName('glazing_block')[i] == target)) {
               hideContent(0);
@@ -52,7 +49,6 @@ window.addEventListener('DOMContentLoaded', function () {
   }
 
   tabs('.decoration_item', '.decoration_slider', '.content_tab', '.decoration_item > div', 'after_click');
-
   tabs('.glazing_block', '.glazing_slider', '.glazing > div > div.row', '.glazing_block > a', 'glazing_activ');
 
   //modal windows
@@ -164,7 +160,7 @@ window.addEventListener('DOMContentLoaded', function () {
     });
   } //end form
 
-  // Отправка сообщения для модального окна
+  // Отправка сообщения для модальных окон
   function sendDataForm() {
     let form = document.querySelectorAll('.form');
     for (let i = 0; i < form.length; i++) {
@@ -184,7 +180,7 @@ window.addEventListener('DOMContentLoaded', function () {
       popupCalcCloseCh = modalCalc.querySelector('strong'),
       widthInput = modalCalc.querySelector('#width'),
       heightInput = modalCalc.querySelector('#height'),
-      selectInput = modalCalc.querySelector('#view_type'),
+
       popupCalcBtn = modalCalc.querySelector('.popup_calc_button'),
       balconIconsWrap = modalCalc.querySelectorAll('.balcon_icons > a > img'),
       balconView = modalCalc.querySelectorAll('.big_img > img'),
@@ -206,7 +202,7 @@ window.addEventListener('DOMContentLoaded', function () {
       modalCalc.addEventListener('click', (event) => {
         let target = event.target
         if (target != modalCalc && target != popupCalcClose && target != popupCalcCloseCh) {
-          // modalCalc.style.display = 'flex';
+
         } else {
           modalCalc.style.display = 'none';
         }
@@ -250,16 +246,16 @@ window.addEventListener('DOMContentLoaded', function () {
 
 
     function nextToCalcProfile() {
- 
+
       popupCalcBtn.addEventListener('click', () => {
 
         let valid = false;
         for (let i = 0; i < modalCalcInputs.length; i++) {
 
           dataWindowObj[modalCalcInputs[i].id] = modalCalcInputs[i].value;
-          
+
           valid = (modalCalcInputs[i].value && !modalCalcInputs[i].value == '') ? true : false;
-            if (!valid) break
+          if (!valid) break
         }
 
         if (valid) {
@@ -295,25 +291,27 @@ window.addEventListener('DOMContentLoaded', function () {
         popupCalcProfileClose = popupCalcProfile.querySelector('.popup_calc_profile_close')
 
       calcProfileTempChekNull();
-      dataWindowObj['temperature'] = '';//по умолчанию
+      dataWindowObj['temperature'] = ''; //по умолчанию
       dataWindowObj['profileType'] = calcProfileSelect.value; //по умолчанию
 
       function hideModalProfile() {
         popupCalcProfile.addEventListener('click', (event) => {
           let target = event.target;
-          // console.log(target)
+
           if (target != popupCalcProfile && target != popupCalcProfileClose && target != popupCalcProfile.querySelector('strong')) {
             // popupCalcProfile.style.display = 'flex';
           } else {
             popupCalcProfile.style.display = 'none';
-            
+
           }
         });
       }
-      function calcProfileTempChekNull (){
+
+      function calcProfileTempChekNull() {
         calcProfileCheckbox[0].checked = false
         calcProfileCheckbox[1].checked = false
       }
+
       function calcProfileTempChek() {
         calcProfileCheckbox[1].addEventListener('click', function (event) {
           calcProfileCheckbox[0].checked = !calcProfileCheckbox[1].checked;
@@ -341,15 +339,15 @@ window.addEventListener('DOMContentLoaded', function () {
 
       function nexToCalcEnd() {
         let calcEnd = document.querySelector('.popup_calc_end'),
-        popupCalcEndClose = calcEnd.querySelector('.popup_calc_end_close')
-      
-       function showCalcEnd () {
-        popupCalcProfileBtn.addEventListener('click', (event) => {
+          popupCalcEndClose = calcEnd.querySelector('.popup_calc_end_close')
+
+        function showCalcEnd() {
+          popupCalcProfileBtn.addEventListener('click', (event) => {
 
             if (dataWindowObj['temperature'] != '' && dataWindowObj['profileType'] != '') {
               calcEnd.style.display = 'flex';
               popupCalcProfile.style.display = 'none';
-              
+
             } else {
               let statusMessage = document.createElement('div');
               statusMessage.style.fontSize = "20px"
@@ -361,24 +359,35 @@ window.addEventListener('DOMContentLoaded', function () {
               }, 2000);
             }
           })
-       }//end showCalcEnd
-       function hideModalCalcEnd() {
-        calcEnd.addEventListener('click', (event) => {
-          let target = event.target
-          if (target != modalCalc && target != popupCalcEndClose && target != popupCalcEndClose.querySelector('strong')) {
-            // modalCalc.style.display = 'flex';
-          } else {
-            calcEnd.style.display = 'none';
-          }
-        });
-      }
+        } //end showCalcEnd
+        function hideModalCalcEnd() {
+          calcEnd.addEventListener('click', (event) => {
+            let target = event.target
+            if (target != modalCalc && target != popupCalcEndClose && target != popupCalcEndClose.querySelector('strong')) {
 
-       showCalcEnd();
-       hideModalCalcEnd();
+            } else {
+              calcEnd.style.display = 'none';
+            }
+          });
+        }
 
-      //  hideCalcEnd();
+        function addDataobjToForm() {
+          let formCalcEnd = calcEnd.querySelector('.form')
 
-      }
+          console.log(dataWindowObj);
+          console.log(formCalcEnd);
+          let newInput = document.createElement('input');
+          newInput.style.display = 'none';
+          newInput.name = ''
+
+
+        }
+
+        showCalcEnd();
+        hideModalCalcEnd();
+        addDataobjToForm();
+
+      } // end  nexToCalcEnd();
       // 
       hideModalProfile()
       calcProfileTempChek();
@@ -395,7 +404,52 @@ window.addEventListener('DOMContentLoaded', function () {
     nextToCalcProfile();
 
   }
-
   calc();
+
+  function timer() {
+    let clockWrap = document.querySelector('.timer1')
+
+    function timBeforEvent(dedLine) {
+      let days = '',
+        hours = '',
+        minutes = '',
+        seconds = '';
+      dedLine = new Date(dedLine).getTime();
+
+      if (isNaN(dedLine)) {
+        return;
+      }
+
+      setInterval(tik, 1000);
+
+      function tik() {
+        let nowDate = new Date();
+        let timeBefore = parseInt((dedLine - nowDate) / 1000);
+        nowDate = nowDate.getTime() + nowDate.getTimezoneOffset() * 60000;
+        if (timeBefore >= 0) {
+
+          days = parseInt(timeBefore / 86400);
+
+          timeBefore = (timeBefore % 86400);
+          hours = parseInt(timeBefore / 3600);
+
+          timeBefore = (timeBefore % 3600);
+          minutes = parseInt(timeBefore / 60);
+
+          seconds = parseInt(timeBefore % 60);
+
+          clockWrap.querySelector('#days').textContent = parseInt(days, 10);
+          clockWrap.querySelector('#hours').textContent = ("0" + hours).slice(-2);
+          clockWrap.querySelector('#minutes > span').textContent = ("0" + minutes).slice(-2);
+          clockWrap.querySelector('#seconds > span').textContent = ("0" + seconds).slice(-2);
+        } else {
+          return;
+        }
+      }
+    }
+    timBeforEvent('12/31/2018 00:00:00 AM');
+
+  }
+  timer();
 
 })
