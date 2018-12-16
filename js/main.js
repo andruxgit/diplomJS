@@ -89,10 +89,11 @@ window.addEventListener('DOMContentLoaded', function () {
     inputPhone.addEventListener('keyup', function () {
       inputPhone.value = inputPhone.value.replace(reNum, '');
     });
-    function deleteDataObj (obj){
+
+    function deleteDataObj(obj) {
       for (let key in obj) {
         delete obj[key];
-        }
+      }
     }
     // send data
     form.addEventListener('submit', function (event) {
@@ -117,13 +118,13 @@ window.addEventListener('DOMContentLoaded', function () {
           formData.forEach(function (value, key) {
             obj[key] = value;
           });
-          for (let key in dataWindowObj ){
-            obj[key] = dataWindowObj[key]; 
+          for (let key in dataWindowObj) {
+            obj[key] = dataWindowObj[key];
           }
 
           let json = JSON.stringify(obj);
           deleteDataObj(dataWindowObj);
-          
+
           request.send(json);
           request.addEventListener('readystatechange', function () {
             if (request.readyState < 4) {
@@ -143,7 +144,7 @@ window.addEventListener('DOMContentLoaded', function () {
         oldColor = headModal.style.color,
         oldFontSize = headModal.style.fontSize;
 
-      postdata(form,dataWindowObj).then(() => {
+      postdata(form, dataWindowObj).then(() => {
         headModal.innerHTML = message.loading;
         headModal.style.color = "yellow";
         headModal.style.fontSize = "22px";
@@ -151,7 +152,7 @@ window.addEventListener('DOMContentLoaded', function () {
         headModal.innerHTML = message.sucsess;
         headModal.style.color = "green";
         headModal.style.fontSize = "28px";
-        
+
       }).catch(() => {
         headModal.innerHTML = message.failure;
         headModal.style.color = "red";
@@ -384,14 +385,14 @@ window.addEventListener('DOMContentLoaded', function () {
           newInput.style.display = 'none';
 
           // for (let key in dataWindowObj){
-            
+
           //   newInput.name = key
           //   newInput.value = dataWindowObj[key];
           //   formCalcEnd.appendChild(newInput);
 
           //   console.log('let=' + dataWindowObj[key])
           // }
-       
+
 
 
         }
@@ -464,9 +465,41 @@ window.addEventListener('DOMContentLoaded', function () {
   }
   timer();
 
+  function showImage() {
 
+    let imagesParent = document.querySelector('.works'),
+      images = imagesParent.querySelectorAll('a'),
+      body = document.querySelector('body'),
+      overlay = document.createElement('div'),
+      overleyImg = document.createElement('img');
 
+    let showModalImg = () => {
+      for (let i = 0; i < images.length; i++) {
 
+        let bigImg = images[i].getAttribute('href');
+        images[i].addEventListener('click', (event) => {
+          event.preventDefault();
+          body.appendChild(overlay);
+          overlay.appendChild(overleyImg);
+          overleyImg.src = bigImg;
+          overlay.style.cssText = "display: flex;position: fixed; top: 0;left: 0;width: 100%;height: 100%;background-color:rgba(0,0,0,0.8);";                            
+          overleyImg.style.cssText = "display:flex; margin: auto; vertical-align: center ";
+        });
+      }
+    };
+    function  hideModalI () {
+      overlay.addEventListener('click', (event) => {
+        let target = event.target;
+        if (target == overlay) {
+          overlay.style.display = 'none';
+        }
+      });
+    };
+
+    showModalImg();
+    hideModalI();
+  }
+  showImage()
 
 
 })
