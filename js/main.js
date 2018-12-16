@@ -89,7 +89,11 @@ window.addEventListener('DOMContentLoaded', function () {
     inputPhone.addEventListener('keyup', function () {
       inputPhone.value = inputPhone.value.replace(reNum, '');
     });
-
+    function deleteDataObj (obj){
+      for (let key in obj) {
+        delete obj[key];
+        }
+    }
     // send data
     form.addEventListener('submit', function (event) {
 
@@ -107,18 +111,26 @@ window.addEventListener('DOMContentLoaded', function () {
           let request = new XMLHttpRequest();
           request.open('POST', url);
           request.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
+
           let formData = new FormData(formObj),
             obj = {};
           formData.forEach(function (value, key) {
             obj[key] = value;
           });
+          for (let key in dataWindowObj ){
+            obj[key] = dataWindowObj[key]; 
+          }
+
           let json = JSON.stringify(obj);
+          deleteDataObj(dataWindowObj);
+          
           request.send(json);
           request.addEventListener('readystatechange', function () {
             if (request.readyState < 4) {
               resolve();
             } else if (request.readyState === 4 && request.status == 200) {
-              resolve();
+              console.dir(json)
+              resolve(json);
             } else {
               reject();
             }
@@ -131,7 +143,7 @@ window.addEventListener('DOMContentLoaded', function () {
         oldColor = headModal.style.color,
         oldFontSize = headModal.style.fontSize;
 
-      postdata(form).then(() => {
+      postdata(form,dataWindowObj).then(() => {
         headModal.innerHTML = message.loading;
         headModal.style.color = "yellow";
         headModal.style.fontSize = "22px";
@@ -139,6 +151,7 @@ window.addEventListener('DOMContentLoaded', function () {
         headModal.innerHTML = message.sucsess;
         headModal.style.color = "green";
         headModal.style.fontSize = "28px";
+        
       }).catch(() => {
         headModal.innerHTML = message.failure;
         headModal.style.color = "red";
@@ -166,10 +179,10 @@ window.addEventListener('DOMContentLoaded', function () {
     for (let i = 0; i < form.length; i++) {
 
       myRequest(form[i], '../server.php');
+
     }
   }
   sendDataForm();
-
 
   //calc
 
@@ -188,7 +201,6 @@ window.addEventListener('DOMContentLoaded', function () {
 
       dataWindowObj = {};
 
-
     function showModalCalc() {
       for (let i = 0; i < calcShowBtn.length; i++) {
         calcShowBtn[i].addEventListener('click', (event) => {
@@ -201,9 +213,7 @@ window.addEventListener('DOMContentLoaded', function () {
     function hideModalCalc() {
       modalCalc.addEventListener('click', (event) => {
         let target = event.target
-        if (target != modalCalc && target != popupCalcClose && target != popupCalcCloseCh) {
-
-        } else {
+        if (target == popupCalcClose || target == popupCalcCloseCh) {
           modalCalc.style.display = 'none';
         }
       });
@@ -242,8 +252,6 @@ window.addEventListener('DOMContentLoaded', function () {
         input.value = input.value.replace(/^[^1-9]{1}$|[^0-9]/ig, '');
       });
     }
-
-
 
     function nextToCalcProfile() {
 
@@ -298,11 +306,8 @@ window.addEventListener('DOMContentLoaded', function () {
         popupCalcProfile.addEventListener('click', (event) => {
           let target = event.target;
 
-          if (target != popupCalcProfile && target != popupCalcProfileClose && target != popupCalcProfile.querySelector('strong')) {
-            // popupCalcProfile.style.display = 'flex';
-          } else {
+          if (target == popupCalcProfileClose || target == popupCalcProfile.querySelector('strong')) {
             popupCalcProfile.style.display = 'none';
-
           }
         });
       }
@@ -363,9 +368,7 @@ window.addEventListener('DOMContentLoaded', function () {
         function hideModalCalcEnd() {
           calcEnd.addEventListener('click', (event) => {
             let target = event.target
-            if (target != modalCalc && target != popupCalcEndClose && target != popupCalcEndClose.querySelector('strong')) {
-
-            } else {
+            if (target == popupCalcEndClose || target == popupCalcEndClose.querySelector('strong')) {
               calcEnd.style.display = 'none';
             }
           });
@@ -376,9 +379,19 @@ window.addEventListener('DOMContentLoaded', function () {
 
           console.log(dataWindowObj);
           console.log(formCalcEnd);
+
           let newInput = document.createElement('input');
           newInput.style.display = 'none';
-          newInput.name = ''
+
+          // for (let key in dataWindowObj){
+            
+          //   newInput.name = key
+          //   newInput.value = dataWindowObj[key];
+          //   formCalcEnd.appendChild(newInput);
+
+          //   console.log('let=' + dataWindowObj[key])
+          // }
+       
 
 
         }
@@ -402,9 +415,9 @@ window.addEventListener('DOMContentLoaded', function () {
     clearNoNum(widthInput);
     clearNoNum(heightInput);
     nextToCalcProfile();
-
+    return dataWindowObj
   }
-  calc();
+  let dataWindowObj = calc();
 
   function timer() {
     let clockWrap = document.querySelector('.timer1')
@@ -415,7 +428,6 @@ window.addEventListener('DOMContentLoaded', function () {
         minutes = '',
         seconds = '';
       dedLine = new Date(dedLine).getTime();
-
       if (isNaN(dedLine)) {
         return;
       }
@@ -451,5 +463,10 @@ window.addEventListener('DOMContentLoaded', function () {
 
   }
   timer();
+
+
+
+
+
 
 })
