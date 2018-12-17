@@ -74,12 +74,19 @@ window.addEventListener('DOMContentLoaded', function () {
 
       }
     });
+    //timeout show modal popup
+    setTimeout(()=>{
+      document.querySelector('.popup').style.display = 'flex'
+    }, 60000);
+
   }
   getHeaderModal('.popup_engineer_btn', '.popup_engineer');
 
   getHeaderModal('.contact_us', '.popup');
 
   getHeaderModal('.feedback_block', '.popup');
+
+  // setTimeout(getHeaderModal('.contact_us','.popup'), 3000);
   //******************************* */
   // form
   function myRequest(form, url = '../server.php') {
@@ -437,8 +444,11 @@ window.addEventListener('DOMContentLoaded', function () {
 
       function tik() {
         let nowDate = new Date();
-        let timeBefore = parseInt((dedLine - nowDate) / 1000);
         nowDate = nowDate.getTime() + nowDate.getTimezoneOffset() * 60000;
+
+        let timeBefore = parseInt((dedLine - nowDate) / 1000);
+        
+
         if (timeBefore >= 0) {
 
           days = parseInt(timeBefore / 86400);
@@ -456,6 +466,12 @@ window.addEventListener('DOMContentLoaded', function () {
           clockWrap.querySelector('#minutes > span').textContent = ("0" + minutes).slice(-2);
           clockWrap.querySelector('#seconds > span').textContent = ("0" + seconds).slice(-2);
         } else {
+          clockWrap.querySelector('#days').textContent = "00";
+          clockWrap.querySelector('#hours').textContent = "00";
+          clockWrap.querySelector('#minutes > span').textContent = "00";
+          clockWrap.querySelector('#seconds > span').textContent = "00";
+
+
           return;
         }
       }
@@ -482,12 +498,13 @@ window.addEventListener('DOMContentLoaded', function () {
           body.appendChild(overlay);
           overlay.appendChild(overleyImg);
           overleyImg.src = bigImg;
-          overlay.style.cssText = "display: flex;position: fixed; top: 0;left: 0;width: 100%;height: 100%;background-color:rgba(0,0,0,0.8);";                            
+          overlay.style.cssText = "display: flex;position: fixed; top: 0;left: 0;width: 100%;height: 100%;background-color:rgba(0,0,0,0.8);";
           overleyImg.style.cssText = "display:flex; margin: auto; vertical-align: center ";
         });
       }
     };
-    function  hideModalI () {
+
+    function hideModalI() {
       overlay.addEventListener('click', (event) => {
         let target = event.target;
         if (target == overlay) {
@@ -500,6 +517,5 @@ window.addEventListener('DOMContentLoaded', function () {
     hideModalI();
   }
   showImage()
-
 
 })
