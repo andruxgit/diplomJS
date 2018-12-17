@@ -22,11 +22,8 @@ function getHeaderModal(classBtn, classWindow) {
   modal.addEventListener('click', (event) => {
     let target = event.target
     if (target != modal && target != popupClose && target != close) {
-      // modal.style.display = 'flex';
     } else {
       modal.style.display = 'none';
-      clearDataObj(dataWindowObj);
-
     }
   });
   //timeout show modal popup

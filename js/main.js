@@ -10,7 +10,7 @@ window.addEventListener('DOMContentLoaded', function () {
 
 
   tabs();
-  modal(dataWindowObj);
+  modal();
   form(dataWindowObj);
   calc(dataWindowObj);
   timer();

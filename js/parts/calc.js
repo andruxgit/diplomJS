@@ -22,7 +22,7 @@ function calc(dataWindowObj) {
     function clearInput(form){
      let inputs = form.getElementsByTagName('input');
       for (let i=0; i < inputs.length; i++){
-        console.log(inputs[i].value);
+      
         inputs[i].value = '';
       }
 
@@ -55,8 +55,9 @@ function calc(dataWindowObj) {
         balconIconsWrap[i].classList.remove('do_image_more');
       }
       balconIconsWrap[num].classList.add('do_image_more');
-      dataWindowObj['view'] = num;
-    }
+      //window -type
+      dataWindowObj.typeWindow = num;
+    } 
 
     function showBalconView(num) {
       hideBalconView(0);
@@ -89,14 +90,13 @@ function calc(dataWindowObj) {
 
       let valid = false;
       for (let i = 0; i < modalCalcInputs.length; i++) {
-
         dataWindowObj[modalCalcInputs[i].id] = modalCalcInputs[i].value;
-
         valid = (modalCalcInputs[i].value && !modalCalcInputs[i].value == '') ? true : false;
         if (!valid) break
       }
 
       if (valid) {
+
         modalCalc.style.display = 'none';
         clearInput(modalCalc);
         showpopupCalcProfile();
@@ -120,7 +120,6 @@ function calc(dataWindowObj) {
     popupCalcProfile.style.display = 'flex';
     let calcProfileCheckbox = popupCalcProfile.querySelectorAll('.checkbox'),
       calcProfileSelect = popupCalcProfile.querySelector('.form-control'),
-      // popupCalcEnd = popupCalcProfile.querySelector('.popup_calc_end'),
       popupCalcProfileBtn = popupCalcProfile.querySelector('.popup_calc_profile_button'),
       popupCalcProfileClose = popupCalcProfile.querySelector('.popup_calc_profile_close')
 
