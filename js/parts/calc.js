@@ -98,6 +98,7 @@ function calc(dataWindowObj) {
 
       if (valid) {
         modalCalc.style.display = 'none';
+        clearInput(modalCalc);
         showpopupCalcProfile();
 
       } else {
@@ -180,6 +181,7 @@ function calc(dataWindowObj) {
           if (dataWindowObj['temperature'] != '' && dataWindowObj['profileType'] != '') {
             calcEnd.style.display = 'flex';
             popupCalcProfile.style.display = 'none';
+            clearInput(popupCalcProfile);
 
           } else {
             let statusMessage = document.createElement('div');
