@@ -20,7 +20,7 @@ function getHeaderModal(classBtn, classWindow) {
   });
 
   modal.addEventListener('click', (event) => {
-    let target = event.target
+    let target = event.target;
     if (target != modal && target != popupClose && target != close) {
     } else {
       modal.style.display = 'none';
@@ -28,7 +28,7 @@ function getHeaderModal(classBtn, classWindow) {
   });
   //timeout show modal popup
   setTimeout(()=>{
-    document.querySelector('.popup').style.display = 'flex'
+    document.querySelector('.popup').style.display = 'flex';
   }, 60000);
 
 }

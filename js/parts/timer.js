@@ -2,7 +2,7 @@
 function timer (){
   
   function timer() {
-    let clockWrap = document.querySelector('.timer1')
+    let clockWrap = document.querySelector('.timer1');
 
     function timBeforEvent(dedLine) {
       let days = '',

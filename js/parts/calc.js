@@ -44,7 +44,7 @@ function calc(dataWindowObj) {
 
     function hideModalCalc() {
       modalCalc.addEventListener('click', (event) => {
-        let target = event.target
+        let target = event.target;
         if (target == popupCalcClose || target == popupCalcCloseCh) {
           modalCalc.style.display = 'none';
           //clear data
@@ -99,7 +99,7 @@ function calc(dataWindowObj) {
         for (let i = 0; i < modalCalcInputs.length; i++) {
           dataWindowObj[modalCalcInputs[i].id] = modalCalcInputs[i].value;
           valid = (modalCalcInputs[i].value && !modalCalcInputs[i].value == '') ? true : false;
-          if (!valid) break
+          if (!valid) break;
         }
 
         if (valid) {
@@ -110,9 +110,9 @@ function calc(dataWindowObj) {
 
         } else {
           let statusMessage = document.createElement('div');
-          statusMessage.style.fontSize = "20px"
-          statusMessage.style.color = "red"
-          statusMessage.textContent = "заполните высоту и ширину"
+          statusMessage.style.fontSize = "20px";
+          statusMessage.style.color = "red";
+          statusMessage.textContent = "заполните высоту и ширину";
           modalCalc.querySelector('.popup_calc_content').appendChild(statusMessage);
           setTimeout(() => {
             modalCalc.querySelector('.popup_calc_content').removeChild(statusMessage);
@@ -128,7 +128,7 @@ function calc(dataWindowObj) {
       let calcProfileCheckbox = popupCalcProfile.querySelectorAll('.checkbox'),
         calcProfileSelect = popupCalcProfile.querySelector('.form-control'),
         popupCalcProfileBtn = popupCalcProfile.querySelector('.popup_calc_profile_button'),
-        popupCalcProfileClose = popupCalcProfile.querySelector('.popup_calc_profile_close')
+        popupCalcProfileClose = popupCalcProfile.querySelector('.popup_calc_profile_close');
 
       calcProfileTempChekNull();
       dataWindowObj['temperature'] = ''; //по умолчанию
@@ -148,8 +148,8 @@ function calc(dataWindowObj) {
       }
 
       function calcProfileTempChekNull() {
-        calcProfileCheckbox[0].checked = false
-        calcProfileCheckbox[1].checked = false
+        calcProfileCheckbox[0].checked = false;
+        calcProfileCheckbox[1].checked = false;
       }
 
       function calcProfileTempChek() {
@@ -191,9 +191,9 @@ function calc(dataWindowObj) {
 
             } else {
               let statusMessage = document.createElement('div');
-              statusMessage.style.fontSize = "20px"
-              statusMessage.style.color = "red"
-              statusMessage.textContent = "Надо выбрать опции тепла"
+              statusMessage.style.fontSize = "20px";
+              statusMessage.style.color = "red";
+              statusMessage.textContent = "Надо выбрать опции тепла";
               popupCalcProfile.querySelector('.popup_calc_profile_content ').appendChild(statusMessage);
               setTimeout(() => {
                 popupCalcProfile.querySelector('.popup_calc_profile_content ').removeChild(statusMessage);
@@ -203,7 +203,7 @@ function calc(dataWindowObj) {
         } //end showCalcEnd
         function hideModalCalcEnd() {
           calcEnd.addEventListener('click', (event) => {
-            let target = event.target
+            let target = event.target;
             if (target == popupCalcEndClose || target == popupCalcEndClose.querySelector('strong')) {
               calcEnd.style.display = 'none';
               //clear data
@@ -220,7 +220,7 @@ function calc(dataWindowObj) {
 
       } // end  nexToCalcEnd();
       // 
-      hideModalProfile()
+      hideModalProfile();
       calcProfileTempChek();
       calcProfileTypeSelect();
       nexToCalcEnd();
